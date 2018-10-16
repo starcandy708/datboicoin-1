@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
-import getWeb3 from "./utils/getWeb3";
+import React, { Component } from "react"
+import SimpleStorageContract from "./contracts/SimpleStorage.json"
+import getWeb3 from "./utils/getWeb3"
 import ipfs from './ipfs'
 
-import truffleContract from "truffle-contract";
+import truffleContract from "truffle-contract"
 
-import "./App.css";
+import "./App.css"
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null, buffer: null, ipfsHash: '' };
@@ -49,27 +49,31 @@ class App extends Component {
     // Update state with the result.
     this.setState({ storageValue: response.toNumber() });
   };
-
-  captureFile(event){
-   event.preventDefault()
-   const file = event.target.files[0]
-   const reader = new window.FileReader()
-   reader.readAsArrayBuffer(file)
-   reader.onloadend = () => {
-     this.setState({buffer: Buffer(reader.result)})
-     console.log('buffer', this.state.buffer)
-   }
+  captureFile(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      this.setState({ buffer: Buffer(reader.result) })
+      console.log('buffer', this.state.buffer)
+    }
   }
 
-  onSubmit(event){
+
+   onSubmit(event){
    event.preventDefault()
    ipfs.files.add(this.state.buffer, (error,result) => {
     if(error){
      console.error(error)
      return
     }
-   this.setState({ipfsHash: result[0].hash})
-   console.log('ipfsHash', this.state.ipfsHash)
+     this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
+        return this.setState({ ipfsHash: result[0].hash })
+        console.log('ifpsHash', this.state.ipfsHash)
+      })
+
    })
   }
 
@@ -87,7 +91,7 @@ class App extends Component {
            <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
 	   <h2>Upload Image</h2>
 	   <form onSubmit={this.onSubmit}>
-             <input type='file' onChange={this.captureFile} />
+             <input type='file' onChange={this.captureFile.bind(this)} />
 	     <input type='submit'/> 
 	   </form>
           </div>
@@ -98,4 +102,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
