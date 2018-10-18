@@ -1,31 +1,62 @@
 import React, { Component } from "react"
 import SimpleStorageContract from "./contracts/SimpleStorage.json"
-import getWeb3 from "./utils/getWeb3"
+import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
-import truffleContract from "truffle-contract"
 
 import "./App.css"
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null, buffer: null, ipfsHash: '' };
+    constructor(props){
+        super(props)
 
+        this.state = {
+            ipfsHash: '', 
+            web3: null, 
+            account: null, 
+            buffer: null 
+        }
+        this.captureFile = this.captureFile.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }  
+
+  componentWillMount() {
+    // Get network provider and web3 instance.
+    // See utils/getWeb3 for more info.
+
+    getWeb3
+    .then(results => {
+      this.setState({
+        web3: results.web3
+      })
+
+      // Instantiate contract once web3 provided.
+      this.instantiateContract()
+    })
+    .catch(() => {
+      console.log('Error finding web3.')
+    })
+  }
+
+
+/* 
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
-      const web3 = await getWeb3();
+      const web3 = await getWeb3()
 
       // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
+      const accounts = await web3.eth.getAccounts()
 
       // Get the contract instance.
-      const Contract = truffleContract(SimpleStorageContract);
-      Contract.setProvider(web3.currentProvider);
-      const instance = await Contract.deployed();
+      const Contract = truffleContract(SimpleStorageContract)
+      Contract.setProvider(web3.currentProvider)
+      const instance = await Contract.deployed()
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+        this.setState({ web3, accounts, contract: instance }, this.runExample)
+        this.instantiateContract() 
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -33,22 +64,33 @@ class App extends Component {
       );
       console.log(error);
     }
-    this.captureFile = this.captureFile.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  };
+  }
+*/
+    instantiateContract() {
+    /*
+     * SMART CONTRACT EXAMPLE
+     *
+     * Normally these functions would be called in the context of a
+     * state management library, but for convenience I've placed them here.
+     */
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+    const contract = require('truffle-contract')
+    const simpleStorage = contract(SimpleStorageContract)
+    simpleStorage.setProvider(this.state.web3.currentProvider)
 
-    // Stores a given value, 5 by default.
-    await contract.set(5, { from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    const response = await contract.get();
-
-    // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
-  };
+    // Get accounts.
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      simpleStorage.deployed().then((instance) => {
+        this.simpleStorageInstance = instance
+        this.setState({ account: accounts[0] })
+        // Get the value from the contract to prove it worked.
+        return this.simpleStorageInstance.get.call(accounts[0])
+      }).then((ipfsHash) => {
+        // Update state with the result.
+        return this.setState({ ipfsHash })
+      })
+    })
+  }
   captureFile(event) {
     event.preventDefault()
     const file = event.target.files[0]
@@ -61,27 +103,24 @@ class App extends Component {
     }
   }
 
-
-   onSubmit(event){
-   event.preventDefault()
-   ipfs.files.add(this.state.buffer, (error,result) => {
-    if(error){
-     console.error(error)
-     return
-    }
-     this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
+    onSubmit(event) {
+    event.preventDefault()
+    ipfs.files.add(this.state.buffer, (error, result) => {
+      if(error) {
+        console.error(error)
+        return
+      }
+      this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
         return this.setState({ ipfsHash: result[0].hash })
         console.log('ifpsHash', this.state.ipfsHash)
       })
-
-   })
+    })
   }
-
+    
   render() {
     return (
       <div className="App">
 	<nav className="navbar pure-menu pure-menu-horizontal">
-	    <a href="#" className="pure-menu-heading pure-menu-link">IPFS File Upload DApp</a>
 	</nav>
 	<main className="container">
 	 <div className="pure-g">
@@ -90,7 +129,7 @@ class App extends Component {
            <p>This image is stored on IPFS & The Ethereum Blockchain</p>
            <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
 	   <h2>Upload Image</h2>
-	   <form onSubmit={this.onSubmit}>
+	   <form onSubmit={this.onSubmit.bind(this)}>
              <input type='file' onChange={this.captureFile.bind(this)} />
 	     <input type='submit'/> 
 	   </form>

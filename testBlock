@@ -1,0 +1,7 @@
+ SimpleStorage.deployed().then(function(i) {app = i;})
+undefined
+truffle(development)> app.get().then(function(value) {ipfsHash = value});
+undefined
+truffle(development)> ipfsHash
+'QmXTGTkN2LxP3aeAw12Lf25Q9mZgL8xYKUNbqMEueCGyEk'
+
