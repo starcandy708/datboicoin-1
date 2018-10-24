@@ -3,6 +3,7 @@ import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
+import './css/pure-min.css'
 import './App.css'
 
 class App extends Component {
@@ -13,7 +14,8 @@ class App extends Component {
       ipfsHash: '',
       web3: null,
       buffer: null,
-      account: null
+      account: null,
+      recentImages: []
     }
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -55,17 +57,35 @@ class App extends Component {
       simpleStorage.deployed().then((instance) => {
         this.simpleStorageInstance = instance
         this.setState({ account: accounts[0] })
-        // Get the value from the contract to prove it worked.
-        return this.simpleStorageInstance.get.call(accounts[0])
-      }).then((ipfsHash) => {
-        // Update state with the result.
+        // Get the value from the contract to prove it worke/d.
+        return this.simpleStorageInstance.get(0)
+      }).then((ipfsHash) => { 
+         // Update state with the result. 
+        let lastHashId =  this.state.simpleStorageInstance.lastHashId();
+        lastHashId = lastHashId.toNumber();
+        console.log("last Hash:"+lastHashId);  
         return this.setState({ ipfsHash }) 
       })
     })
-    this.setState({ipfsHash: this.ipfsHash});
-    console.log('Contarct hash-' + this.state.ipfsHash) 
-     
   }
+    loadRecentImages(event){
+            let recentImages = []; 
+            let lastHash =  this.state.simpleStorageInstance.lastHashId();
+            const firstHash = Math.max(1, lastHash - 5);
+            for(let i = lastHash; i >= firstHash; i--){
+                let image =  this.loadImage(i);
+                recentImages.push(image); 
+            }
+    }
+    loadImage(hash){
+        let hashMap = {};
+        this.simpleStorageInstance.get(hash).then((value) =>  {
+        hashMap.ipfsHashString = value[0];
+        console.log("hash map HERE:"+hashMap.ipfsHashString);
+        });
+        return(hashMap);
+    
+    }
 
   captureFile(event) {
     event.preventDefault()
@@ -115,8 +135,8 @@ class App extends Component {
                 <input type='file' onChange={this.captureFile} />
                 <input type='submit' />
               </form>
-              <button onClick = {this.returnHash}>
-                returnHash
+              <button onClick = {this.loadRecentImages}>
+                load Images
               </button>
             </div>
           </div>

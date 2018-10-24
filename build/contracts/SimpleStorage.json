@@ -2,10 +2,49 @@
   "contractName": "SimpleStorage",
   "abi": [
     {
+      "constant": true,
+      "inputs": [],
+      "name": "lastHashId",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "hashMap",
+      "outputs": [
+        {
+          "name": "ipfsHash",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
       "constant": false,
       "inputs": [
         {
-          "name": "x",
+          "name": "_ipfsHash",
           "type": "string"
         }
       ],
@@ -17,11 +56,16 @@
     },
     {
       "constant": true,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "_hashId",
+          "type": "uint256"
+        }
+      ],
       "name": "get",
       "outputs": [
         {
-          "name": "",
+          "name": "ipfsHash",
           "type": "string"
         }
       ],
@@ -30,31 +74,31 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b506102d7806100206000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100515780636d4ce63c146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610206565b5050565b606060008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fc5780601f106101d1576101008083540402835291602001916101fc565b820191906000526020600020905b8154815290600101906020018083116101df57829003601f168201915b5050505050905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024757805160ff1916838001178555610275565b82800160010185558215610275579182015b82811115610274578251825591602001919060010190610259565b5b5090506102829190610286565b5090565b6102a891905b808211156102a457600081600090555060010161028c565b5090565b905600a165627a7a72305820fa14533af01c76c0b9123063e7a335c521155a151196d6107f19608c2c499e310029",
-  "deployedBytecode": "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100515780636d4ce63c146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610206565b5050565b606060008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fc5780601f106101d1576101008083540402835291602001916101fc565b820191906000526020600020905b8154815290600101906020018083116101df57829003601f168201915b5050505050905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024757805160ff1916838001178555610275565b82800160010185558215610275579182015b82811115610274578251825591602001919060010190610259565b5b5090506102829190610286565b5090565b6102a891905b808211156102a457600081600090555060010161028c565b5090565b905600a165627a7a72305820fa14533af01c76c0b9123063e7a335c521155a151196d6107f19608c2c499e310029",
-  "sourceMap": "25:176:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:176:1;;;;;;;",
-  "deployedSourceMap": "25:176:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;72:53;;8:9:-1;5:2;;;30:1;27;20:12;5:2;72:53:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;129:70;;8:9:-1;5:2;;;30:1;27;20:12;5:2;129:70:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;129:70:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;72:53;119:1;108:8;:12;;;;;;;;;;;;:::i;:::-;;72:53;:::o;129:70::-;165:6;186:8;179:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;129:70;:::o;25:176::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
-  "source": "pragma solidity 0.4.24;\n\ncontract SimpleStorage {\n  string ipfsHash;\n\n  function set(string x) public {\n    ipfsHash = x;\n  }\n\n  function get() public view returns (string) {\n    return ipfsHash;\n  }\n}\n",
+  "bytecode": "0x608060405234801561001057600080fd5b5060006001819055506104cc806100286000396000f300608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100675780639507d39a146100d05780639f74982714610176578063b887726d146101a1575b600080fd5b34801561007357600080fd5b506100ce600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610247565b005b3480156100dc57600080fd5b506100fb60048036038101908080359060200190929190505050610288565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561013b578082015181840152602081019050610120565b50505050905090810190601f1680156101685780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561018257600080fd5b5061018b61033f565b6040518082815260200191505060405180910390f35b3480156101ad57600080fd5b506101cc60048036038101908080359060200190929190505050610345565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561020c5780820151818401526020810190506101f1565b50505050905090810190601f1680156102395780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b600060016000815460010191905081905590508160008083815260200190815260200160002060000190805190602001906102839291906103fb565b505050565b60606000808381526020019081526020016000206000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156103335780601f1061030857610100808354040283529160200191610333565b820191906000526020600020905b81548152906001019060200180831161031657829003601f168201915b50505050509050919050565b60015481565b6000602052806000526040600020600091509050806000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156103f15780601f106103c6576101008083540402835291602001916103f1565b820191906000526020600020905b8154815290600101906020018083116103d457829003601f168201915b5050505050905081565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061043c57805160ff191683800117855561046a565b8280016001018555821561046a579182015b8281111561046957825182559160200191906001019061044e565b5b509050610477919061047b565b5090565b61049d91905b80821115610499576000816000905550600101610481565b5090565b905600a165627a7a72305820823a2f80e74d70f4fe02efbcb44a6e928f37aad24249024a9f35fb9d4343c88d0029",
+  "deployedBytecode": "0x608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100675780639507d39a146100d05780639f74982714610176578063b887726d146101a1575b600080fd5b34801561007357600080fd5b506100ce600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610247565b005b3480156100dc57600080fd5b506100fb60048036038101908080359060200190929190505050610288565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561013b578082015181840152602081019050610120565b50505050905090810190601f1680156101685780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561018257600080fd5b5061018b61033f565b6040518082815260200191505060405180910390f35b3480156101ad57600080fd5b506101cc60048036038101908080359060200190929190505050610345565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561020c5780820151818401526020810190506101f1565b50505050905090810190601f1680156102395780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b600060016000815460010191905081905590508160008083815260200190815260200160002060000190805190602001906102839291906103fb565b505050565b60606000808381526020019081526020016000206000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156103335780601f1061030857610100808354040283529160200191610333565b820191906000526020600020905b81548152906001019060200180831161031657829003601f168201915b50505050509050919050565b60015481565b6000602052806000526040600020600091509050806000018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156103f15780601f106103c6576101008083540402835291602001916103f1565b820191906000526020600020905b8154815290600101906020018083116103d457829003601f168201915b5050505050905081565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061043c57805160ff191683800117855561046a565b8280016001018555821561046a579182015b8281111561046957825182559160200191906001019061044e565b5b509050610477919061047b565b5090565b61049d91905b80821115610499576000816000905550600101610481565b5090565b905600a165627a7a72305820823a2f80e74d70f4fe02efbcb44a6e928f37aad24249024a9f35fb9d4343c88d0029",
+  "sourceMap": "25:495:0:-;;;205:52;8:9:-1;5:2;;;30:1;27;20:12;5:2;205:52:0;249:1;236:10;:14;;;;25:495;;;;;;",
+  "deployedSourceMap": "25:495:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;263:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;263:127:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;396:122;;8:9:-1;5:2;;;30:1;27;20:12;5:2;396:122:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;396:122:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;176:22;;8:9:-1;5:2;;;30:1;27;20:12;5:2;176:22:0;;;;;;;;;;;;;;;;;;;;;;;124:41;;8:9:-1;5:2;;;30:1;27;20:12;5:2;124:41:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;124:41:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;263:127;311:11;327:10;;325:12;;;;;;;;;;311:26;;374:9;347:7;:15;355:6;347:15;;;;;;;;;;;:24;;:36;;;;;;;;;;;;:::i;:::-;;263:127;;:::o;396:122::-;449:15;484:7;:16;492:7;484:16;;;;;;;;;;;:25;;476:34;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;396:122;;;:::o;176:22::-;;;;:::o;124:41::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;25:495::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity 0.4.24;\n\ncontract SimpleStorage {\n    struct imageHash{\n       string ipfsHash;  \n    } \n    //Hash Map\n    mapping(uint => imageHash) public hashMap;\n    \n    uint public lastHashId;\n\n    constructor() public {\n        lastHashId = 0;\n    }\n\n    function set(string _ipfsHash) public {\n        uint hashId = ++lastHashId;\n        hashMap[hashId].ipfsHash = _ipfsHash;\n    }\n\n    function get(uint _hashId ) constant public returns (string ipfsHash) {\n        return (hashMap[_hashId].ipfsHash);\n\n    }\n}\n",
   "sourcePath": "/home/starcandy/datboicoin/contracts/SimpleStorage.sol",
   "ast": {
     "absolutePath": "/home/starcandy/datboicoin/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
-        79
+        51
       ]
     },
-    "id": 80,
+    "id": 52,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 58,
+        "id": 1,
         "literals": [
           "solidity",
           "0.4",
           ".24"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:1"
+        "src": "0:23:0"
       },
       {
         "baseContracts": [],
@@ -62,61 +106,339 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 79,
+        "id": 51,
         "linearizedBaseContracts": [
-          79
+          51
         ],
         "name": "SimpleStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "canonicalName": "SimpleStorage.imageHash",
+            "id": 4,
+            "members": [
+              {
+                "constant": false,
+                "id": 3,
+                "name": "ipfsHash",
+                "nodeType": "VariableDeclaration",
+                "scope": 4,
+                "src": "79:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 2,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "79:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "imageHash",
+            "nodeType": "StructDefinition",
+            "scope": 51,
+            "src": "54:49:0",
+            "visibility": "public"
+          },
+          {
             "constant": false,
-            "id": 60,
-            "name": "ipfsHash",
+            "id": 8,
+            "name": "hashMap",
             "nodeType": "VariableDeclaration",
-            "scope": 79,
-            "src": "52:15:1",
+            "scope": 51,
+            "src": "124:41:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_string_storage",
-              "typeString": "string"
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+              "typeString": "mapping(uint256 => struct SimpleStorage.imageHash)"
             },
             "typeName": {
-              "id": 59,
-              "name": "string",
-              "nodeType": "ElementaryTypeName",
-              "src": "52:6:1",
+              "id": 7,
+              "keyType": {
+                "id": 5,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "132:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "124:26:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_string_storage_ptr",
-                "typeString": "string"
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                "typeString": "mapping(uint256 => struct SimpleStorage.imageHash)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 6,
+                "name": "imageHash",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 4,
+                "src": "140:9:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_imageHash_$4_storage_ptr",
+                  "typeString": "struct SimpleStorage.imageHash"
+                }
               }
             },
             "value": null,
-            "visibility": "internal"
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 10,
+            "name": "lastHashId",
+            "nodeType": "VariableDeclaration",
+            "scope": 51,
+            "src": "176:22:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 9,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "176:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
           },
           {
             "body": {
-              "id": 69,
+              "id": 17,
               "nodeType": "Block",
-              "src": "102:23:1",
+              "src": "226:31:0",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 67,
+                    "id": 15,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 65,
-                      "name": "ipfsHash",
+                      "id": 13,
+                      "name": "lastHashId",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 60,
-                      "src": "108:8:1",
+                      "referencedDeclaration": 10,
+                      "src": "236:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 14,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "249:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "236:14:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 16,
+                  "nodeType": "ExpressionStatement",
+                  "src": "236:14:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 18,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 11,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "216:2:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 12,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "226:0:0"
+            },
+            "scope": 51,
+            "src": "205:52:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 35,
+              "nodeType": "Block",
+              "src": "301:89:0",
+              "statements": [
+                {
+                  "assignments": [
+                    24
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 24,
+                      "name": "hashId",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 36,
+                      "src": "311:11:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 23,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "311:4:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 27,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 26,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": true,
+                    "src": "325:12:0",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 25,
+                      "name": "lastHashId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 10,
+                      "src": "327:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "311:26:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 33,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 28,
+                          "name": "hashMap",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 8,
+                          "src": "347:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                            "typeString": "mapping(uint256 => struct SimpleStorage.imageHash storage ref)"
+                          }
+                        },
+                        "id": 30,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 29,
+                          "name": "hashId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 24,
+                          "src": "355:6:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "347:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_imageHash_$4_storage",
+                          "typeString": "struct SimpleStorage.imageHash storage ref"
+                        }
+                      },
+                      "id": 31,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "ipfsHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 3,
+                      "src": "347:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage",
                         "typeString": "string storage ref"
@@ -126,31 +448,31 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 66,
-                      "name": "x",
+                      "id": 32,
+                      "name": "_ipfsHash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 62,
-                      "src": "119:1:1",
+                      "referencedDeclaration": 20,
+                      "src": "374:9:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
                         "typeString": "string memory"
                       }
                     },
-                    "src": "108:12:1",
+                    "src": "347:36:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage",
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 68,
+                  "id": 34,
                   "nodeType": "ExpressionStatement",
-                  "src": "108:12:1"
+                  "src": "347:36:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 70,
+            "id": 36,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -158,16 +480,16 @@
             "name": "set",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 63,
+              "id": 21,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 62,
-                  "name": "x",
+                  "id": 20,
+                  "name": "_ipfsHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 70,
-                  "src": "85:8:1",
+                  "scope": 36,
+                  "src": "276:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -175,10 +497,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 61,
+                    "id": 19,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "85:6:1",
+                    "src": "276:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -188,50 +510,110 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "84:10:1"
+              "src": "275:18:0"
             },
             "payable": false,
             "returnParameters": {
-              "id": 64,
+              "id": 22,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "102:0:1"
+              "src": "301:0:0"
             },
-            "scope": 79,
-            "src": "72:53:1",
+            "scope": 51,
+            "src": "263:127:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 77,
+              "id": 49,
               "nodeType": "Block",
-              "src": "173:26:1",
+              "src": "466:52:0",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 75,
-                    "name": "ipfsHash",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 60,
-                    "src": "186:8:1",
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 43,
+                            "name": "hashMap",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 8,
+                            "src": "484:7:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                              "typeString": "mapping(uint256 => struct SimpleStorage.imageHash storage ref)"
+                            }
+                          },
+                          "id": 45,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 44,
+                            "name": "_hashId",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 38,
+                            "src": "492:7:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "484:16:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_imageHash_$4_storage",
+                            "typeString": "struct SimpleStorage.imageHash storage ref"
+                          }
+                        },
+                        "id": 46,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "ipfsHash",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 3,
+                        "src": "484:25:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      }
+                    ],
+                    "id": 47,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "483:27:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage",
                       "typeString": "string storage ref"
                     }
                   },
-                  "functionReturnParameters": 74,
-                  "id": 76,
+                  "functionReturnParameters": 42,
+                  "id": 48,
                   "nodeType": "Return",
-                  "src": "179:15:1"
+                  "src": "476:34:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 78,
+            "id": 50,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -239,23 +621,50 @@
             "name": "get",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 71,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "141:2:1"
-            },
-            "payable": false,
-            "returnParameters": {
-              "id": 74,
+              "id": 39,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 73,
-                  "name": "",
+                  "id": 38,
+                  "name": "_hashId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 78,
-                  "src": "165:6:1",
+                  "scope": 50,
+                  "src": "409:12:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "409:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "408:15:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 42,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 41,
+                  "name": "ipfsHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 50,
+                  "src": "449:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -263,10 +672,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 72,
+                    "id": 40,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "165:6:1",
+                    "src": "449:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -276,40 +685,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "164:8:1"
+              "src": "448:17:0"
             },
-            "scope": 79,
-            "src": "129:70:1",
+            "scope": 51,
+            "src": "396:122:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 80,
-        "src": "25:176:1"
+        "scope": 52,
+        "src": "25:495:0"
       }
     ],
-    "src": "0:202:1"
+    "src": "0:521:0"
   },
   "legacyAST": {
     "absolutePath": "/home/starcandy/datboicoin/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
-        79
+        51
       ]
     },
-    "id": 80,
+    "id": 52,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 58,
+        "id": 1,
         "literals": [
           "solidity",
           "0.4",
           ".24"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:1"
+        "src": "0:23:0"
       },
       {
         "baseContracts": [],
@@ -317,61 +726,339 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 79,
+        "id": 51,
         "linearizedBaseContracts": [
-          79
+          51
         ],
         "name": "SimpleStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "canonicalName": "SimpleStorage.imageHash",
+            "id": 4,
+            "members": [
+              {
+                "constant": false,
+                "id": 3,
+                "name": "ipfsHash",
+                "nodeType": "VariableDeclaration",
+                "scope": 4,
+                "src": "79:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 2,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "79:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "imageHash",
+            "nodeType": "StructDefinition",
+            "scope": 51,
+            "src": "54:49:0",
+            "visibility": "public"
+          },
+          {
             "constant": false,
-            "id": 60,
-            "name": "ipfsHash",
+            "id": 8,
+            "name": "hashMap",
             "nodeType": "VariableDeclaration",
-            "scope": 79,
-            "src": "52:15:1",
+            "scope": 51,
+            "src": "124:41:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_string_storage",
-              "typeString": "string"
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+              "typeString": "mapping(uint256 => struct SimpleStorage.imageHash)"
             },
             "typeName": {
-              "id": 59,
-              "name": "string",
-              "nodeType": "ElementaryTypeName",
-              "src": "52:6:1",
+              "id": 7,
+              "keyType": {
+                "id": 5,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "132:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "124:26:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_string_storage_ptr",
-                "typeString": "string"
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                "typeString": "mapping(uint256 => struct SimpleStorage.imageHash)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 6,
+                "name": "imageHash",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 4,
+                "src": "140:9:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_imageHash_$4_storage_ptr",
+                  "typeString": "struct SimpleStorage.imageHash"
+                }
               }
             },
             "value": null,
-            "visibility": "internal"
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 10,
+            "name": "lastHashId",
+            "nodeType": "VariableDeclaration",
+            "scope": 51,
+            "src": "176:22:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 9,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "176:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
           },
           {
             "body": {
-              "id": 69,
+              "id": 17,
               "nodeType": "Block",
-              "src": "102:23:1",
+              "src": "226:31:0",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 67,
+                    "id": 15,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 65,
-                      "name": "ipfsHash",
+                      "id": 13,
+                      "name": "lastHashId",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 60,
-                      "src": "108:8:1",
+                      "referencedDeclaration": 10,
+                      "src": "236:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 14,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "249:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "236:14:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 16,
+                  "nodeType": "ExpressionStatement",
+                  "src": "236:14:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 18,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 11,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "216:2:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 12,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "226:0:0"
+            },
+            "scope": 51,
+            "src": "205:52:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 35,
+              "nodeType": "Block",
+              "src": "301:89:0",
+              "statements": [
+                {
+                  "assignments": [
+                    24
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 24,
+                      "name": "hashId",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 36,
+                      "src": "311:11:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 23,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "311:4:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 27,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 26,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": true,
+                    "src": "325:12:0",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 25,
+                      "name": "lastHashId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 10,
+                      "src": "327:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "311:26:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 33,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 28,
+                          "name": "hashMap",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 8,
+                          "src": "347:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                            "typeString": "mapping(uint256 => struct SimpleStorage.imageHash storage ref)"
+                          }
+                        },
+                        "id": 30,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 29,
+                          "name": "hashId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 24,
+                          "src": "355:6:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "347:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_imageHash_$4_storage",
+                          "typeString": "struct SimpleStorage.imageHash storage ref"
+                        }
+                      },
+                      "id": 31,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "ipfsHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 3,
+                      "src": "347:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage",
                         "typeString": "string storage ref"
@@ -381,31 +1068,31 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 66,
-                      "name": "x",
+                      "id": 32,
+                      "name": "_ipfsHash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 62,
-                      "src": "119:1:1",
+                      "referencedDeclaration": 20,
+                      "src": "374:9:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
                         "typeString": "string memory"
                       }
                     },
-                    "src": "108:12:1",
+                    "src": "347:36:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage",
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 68,
+                  "id": 34,
                   "nodeType": "ExpressionStatement",
-                  "src": "108:12:1"
+                  "src": "347:36:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 70,
+            "id": 36,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -413,16 +1100,16 @@
             "name": "set",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 63,
+              "id": 21,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 62,
-                  "name": "x",
+                  "id": 20,
+                  "name": "_ipfsHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 70,
-                  "src": "85:8:1",
+                  "scope": 36,
+                  "src": "276:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -430,10 +1117,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 61,
+                    "id": 19,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "85:6:1",
+                    "src": "276:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -443,50 +1130,110 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "84:10:1"
+              "src": "275:18:0"
             },
             "payable": false,
             "returnParameters": {
-              "id": 64,
+              "id": 22,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "102:0:1"
+              "src": "301:0:0"
             },
-            "scope": 79,
-            "src": "72:53:1",
+            "scope": 51,
+            "src": "263:127:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 77,
+              "id": 49,
               "nodeType": "Block",
-              "src": "173:26:1",
+              "src": "466:52:0",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 75,
-                    "name": "ipfsHash",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 60,
-                    "src": "186:8:1",
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 43,
+                            "name": "hashMap",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 8,
+                            "src": "484:7:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_imageHash_$4_storage_$",
+                              "typeString": "mapping(uint256 => struct SimpleStorage.imageHash storage ref)"
+                            }
+                          },
+                          "id": 45,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 44,
+                            "name": "_hashId",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 38,
+                            "src": "492:7:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "484:16:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_imageHash_$4_storage",
+                            "typeString": "struct SimpleStorage.imageHash storage ref"
+                          }
+                        },
+                        "id": 46,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "ipfsHash",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 3,
+                        "src": "484:25:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      }
+                    ],
+                    "id": 47,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "483:27:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage",
                       "typeString": "string storage ref"
                     }
                   },
-                  "functionReturnParameters": 74,
-                  "id": 76,
+                  "functionReturnParameters": 42,
+                  "id": 48,
                   "nodeType": "Return",
-                  "src": "179:15:1"
+                  "src": "476:34:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 78,
+            "id": 50,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -494,23 +1241,50 @@
             "name": "get",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 71,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "141:2:1"
-            },
-            "payable": false,
-            "returnParameters": {
-              "id": 74,
+              "id": 39,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 73,
-                  "name": "",
+                  "id": 38,
+                  "name": "_hashId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 78,
-                  "src": "165:6:1",
+                  "scope": 50,
+                  "src": "409:12:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "409:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "408:15:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 42,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 41,
+                  "name": "ipfsHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 50,
+                  "src": "449:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -518,10 +1292,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 72,
+                    "id": 40,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "165:6:1",
+                    "src": "449:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -531,20 +1305,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "164:8:1"
+              "src": "448:17:0"
             },
-            "scope": 79,
-            "src": "129:70:1",
+            "scope": 51,
+            "src": "396:122:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 80,
-        "src": "25:176:1"
+        "scope": 52,
+        "src": "25:495:0"
       }
     ],
-    "src": "0:202:1"
+    "src": "0:521:0"
   },
   "compiler": {
     "name": "solc",
@@ -561,7 +1335,7 @@
       "events": {},
       "links": {},
       "address": "0x721f7125ad970fe7e5298c83178ef2579f5a8ca9",
-      "transactionHash": "0x8362166c80438bb7902720b4e7bda6056212b4096c21eeed15523cc86a8fa235"
+      "transactionHash": "0x324c3098693aace258eeafa76156094e5e3255c0edf0a632dbcf066e1113abe4"
     },
     "1538662562793": {
       "events": {},
@@ -571,5 +1345,5 @@
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-10-23T01:15:36.227Z"
+  "updatedAt": "2018-10-23T21:37:32.986Z"
 }

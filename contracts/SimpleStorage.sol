@@ -1,13 +1,25 @@
 pragma solidity 0.4.24;
 
 contract SimpleStorage {
-  string ipfsHash;
+    struct imageHash{
+       string ipfsHash;  
+    } 
+    //Hash Map
+    mapping(uint => imageHash) public hashMap;
+    
+    uint public lastHashId;
 
-  function set(string x) public {
-    ipfsHash = x;
-  }
+    constructor() public {
+        lastHashId = 0;
+    }
 
-  function get() public view returns (string) {
-    return ipfsHash;
-  }
+    function set(string _ipfsHash) public {
+        uint hashId = ++lastHashId;
+        hashMap[hashId].ipfsHash = _ipfsHash;
+    }
+
+    function get(uint _hashId ) constant public returns (string ipfsHash) {
+        return (hashMap[_hashId].ipfsHash);
+
+    }
 }
