@@ -9,7 +9,7 @@ contract SimpleStorage {
     
     uint public lastHashId;
 
-    constructor() public {
+    function SimpleStorage() public {
         lastHashId = 0;
     }
 
@@ -21,5 +21,8 @@ contract SimpleStorage {
     function get(uint _hashId ) constant public returns (string ipfsHash) {
         return (hashMap[_hashId].ipfsHash);
 
+    }
+    function getLastHash() constant public returns (uint HashId){
+        return(lastHashId);
     }
 }

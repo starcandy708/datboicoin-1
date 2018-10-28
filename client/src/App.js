@@ -5,6 +5,7 @@ import ipfs from './ipfs'
 
 import './css/pure-min.css'
 import './App.css'
+var Loader = require('react-loader');
 
 class App extends Component {
   constructor(props) {
@@ -15,12 +16,13 @@ class App extends Component {
       web3: null,
       buffer: null,
       account: null,
+      number: 0,
+      loadingImages: false,
       recentImages: []
     }
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.returnHash = this.returnHash.bind(this);
-    console.log('hash' + this.state.ipfsHash) 
+    this.loadImages = this.loadImages.bind(this);
   }
 
   componentWillMount() {
@@ -40,7 +42,7 @@ class App extends Component {
     })
   }
 
-  instantiateContract() {
+async  instantiateContract() {
     /*
      * SMART CONTRACT EXAMPLE
      *
@@ -52,71 +54,85 @@ class App extends Component {
     const simpleStorage = contract(SimpleStorageContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
     console.log('Starting Contract getting account')
+    
     // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.deployed().then((instance) => {
+      this.state.web3.eth.getAccounts( async (error, accounts) => { 
+         simpleStorage.deployed().then(async (instance) => {
         this.simpleStorageInstance = instance
         this.setState({ account: accounts[0] })
         // Get the value from the contract to prove it worke/d.
-        return this.simpleStorageInstance.get(0)
+        
+        this.loadImages();  
+        console.log("Array after function call" + this.state.recentImages);
+        return this.simpleStorageInstance.get(2)
       }).then((ipfsHash) => { 
          // Update state with the result. 
-        let lastHashId =  this.state.simpleStorageInstance.lastHashId();
-        lastHashId = lastHashId.toNumber();
-        console.log("last Hash:"+lastHashId);  
-        return this.setState({ ipfsHash }) 
-      })
+    //    await this.loadImages();  
+        this.setState({ ipfsHash})  
+      }) 
     })
   }
-    loadRecentImages(event){
-            let recentImages = []; 
-            let lastHash =  this.state.simpleStorageInstance.lastHashId();
-            const firstHash = Math.max(1, lastHash - 5);
-            for(let i = lastHash; i >= firstHash; i--){
-                let image =  this.loadImage(i);
-                recentImages.push(image); 
+
+    onSubmit(event) {
+        event.preventDefault()
+        ipfs.files.add(this.state.buffer, (error, result) => {
+            if(error) {
+                console.error(error)
+                return
             }
+            this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
+                return this.setState({ ipfsHash: result[0].hash })
+            })
+            console.log('saving ifpsHash-'+ this.state.ipfsHash)
+        })
     }
-    loadImage(hash){
-        let hashMap = {};
-        this.simpleStorageInstance.get(hash).then((value) =>  {
-        hashMap.ipfsHashString = value[0];
-        console.log("hash map HERE:"+hashMap.ipfsHashString);
-        });
-        return(hashMap);
-    
+    captureFile(event) {
+        event.preventDefault()
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
+        reader.onloadend = () => {
+          this.setState({ buffer: Buffer(reader.result) })
+          //console.log('buffer' + this.state.buffer)
+        }
     }
 
-  captureFile(event) {
-    event.preventDefault()
-    const file = event.target.files[0]
-    const reader = new window.FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = () => {
-      this.setState({ buffer: Buffer(reader.result) })
-      //console.log('buffer' + this.state.buffer)
+    returnArray(event){
+        event.preventDefault();
+        console.log("Images Recent-"+this.state.ipfsHash); 
     }
-  }
+  
+    async loadImages(){
+            this.setState({loadingImages: true, recentImages: []}); 
+            let recentImages = []; 
+            this.simpleStorageInstance.lastHashId ({from: this.state.account}).then((lastHash) =>{ 
+                const firstHash = Math.max(1, lastHash - 5);
+                for(let i = lastHash; i >= firstHash; i--){
+                   this.simpleStorageInstance.get(i, {form: this.state.account}).then((recentHash) => {
+                        let submission = {};
+                        submission.hashContent = recentHash;
+                        submission.hashId = i;
+                        recentImages.push(submission);
+                        this.setState(recentImages: recentImages);
+                        //console.log("Hash id -" + submission.hashId + "Hash -" + submission.hashContent);
+                        console.log("array in function" + this.state.recentImages);
+                    }) 
+                }
+    
+                console.log("array in function before return" + this.state.recentImages);
+                return this.setState({loadingImages: false, recentImages: recentImages});  
+            })
+    }
+    renderImages(submission){
 
-  onSubmit(event) {
-    event.preventDefault()
-    ipfs.files.add(this.state.buffer, (error, result) => {
-      if(error) {
-        console.error(error)
-        return
-      }
-      this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
-        return this.setState({ ipfsHash: result[0].hash })
-      })
-    
-        console.log('ifpsHash'+ this.state.ipfsHash)
-    })
-    
-  }
-  returnHash(event){
-    event.preventDefault()
-    console.log('hash' + this.state.ipfsHash) 
-  }
+        console.log("array in function" + this.state.recentImages);
+        return(
+            <div className="RecentImage" key={submission.hashId}>
+              <div className="pure-g">
+                <img src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 
+              </div>
+            </div>);
+    } 
   render() {
     return (
       <div className="App">
@@ -129,17 +145,25 @@ class App extends Component {
             <div className="pure-u-1-1">
               <h1>Your Image</h1>
               <p>This Meme is being stored on DatBoiCoin</p>
-              <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
               <h2>Upload Image</h2>
               <form onSubmit={this.onSubmit} >
                 <input type='file' onChange={this.captureFile} />
                 <input type='submit' />
               </form>
-              <button onClick = {this.loadRecentImages}>
-                load Images
+              <button onClick = {this.returnArray}>
+                ReturnArray
               </button>
             </div>
           </div>
+        <div className="RecentSubmissions">
+          <div className="pure-u-1-1">
+            <h3>Recent Submissions</h3>
+            <Loader loaded={!this.state.loadingImages}>
+              {this.state.recentImages.map((submission) => this.renderImages(submission))}
+            </Loader>
+          </div>
+        </div>
+
         </main>
       </div>
     );
