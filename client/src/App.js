@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Gallery from 'react-photo-gallery'
+import Lightbox from 'react-images' 
 import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
@@ -7,6 +9,8 @@ import './css/pure-min.css'
 import './App.css'
 var Loader = require('react-loader');
 
+
+const photos= [];
 class App extends Component {
   constructor(props) {
     super(props)
@@ -17,9 +21,14 @@ class App extends Component {
       buffer: null,
       account: null,
       number: 0,
+	  currentImage: 0,
       loadingImages: false,
       recentImages: []
     }
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.gotoNext = this.gotoNext.bind(this);
+    this.gotoPrevious = this.gotoPrevious.bind(this);
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.loadImages = this.loadImages.bind(this);
@@ -75,11 +84,24 @@ async  instantiateContract() {
 
     onSubmit(event) {
         event.preventDefault()
+		var exit = 0;	
         ipfs.files.add(this.state.buffer, (error, result) => {
+			for(let i = 0; i < this.state.recentImages.length; i++){	
+				let object = this.state.recentImages[i];
+				if(result[0].hash == object.hashContent){
+					console.log("reeeepost");
+					exit = 1;
+					return
+				}
+			}	
+			if(exit == 1){
+				console.log("exit");
+				return
+			}
             if(error) {
                 console.error(error)
                 return
-            }
+            }	
             this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
                 return this.setState({ ipfsHash: result[0].hash })
             })
@@ -100,26 +122,60 @@ async  instantiateContract() {
     loadImages(){
             this.setState({loadingImages: true, recentImages: []}); 
             let recentImages = []; 
+			//let photos = [];
             this.simpleStorageInstance.lastHashId ({from: this.state.account}).then((lastHash) =>{ 
-                const firstHash = Math.max(1, lastHash - 5);
                 for(let i = lastHash; i >= 1; i--){
                    this.simpleStorageInstance.get(i, {form: this.state.account}).then((recentHash) => {
-                        let submission = {};
+                        let photo = {src:"",width:1,height:1};
+						let submission = {};
+						var ipfs = "https://ipfs.io/ipfs/"
+						var hash = recentHash[0];
+						var url = ipfs.concat(hash); 	
+						console.log("URL-"+url);
+						photo.src = url;
+						var img = new Image(); 
+						img.src = url;
+						console.log(img.width+" "+img.height);	
+						photo.width = img.width;						
+						photo.height = img.height;
+						photos.push(photo);
+						
+						//this.setState(photos: photos);
+	
                         submission.hashContent = recentHash[0];
                         submission.sender = recentHash[1];
-                        submission.time = recentHash[2].toNumber();
-                        
+                        submission.time = recentHash[2].toNumber(); 
                         submission.hashId = i.toString();
                         recentImages.push(submission);
                         this.setState(recentImages: recentImages);
-                        console.log("Hash id -" + submission.hashId + "Hash -" + submission.hashContent);
-                        console.log("array in function" + this.state.recentImages);
                     }) 
                 }
     
                 return this.setState({loadingImages: false, recentImages: recentImages});  
             })
     }
+	openLightbox(event, obj) {
+	this.setState({
+	  currentImage: obj.index,
+	  lightboxIsOpen: true,
+	});
+	}
+	closeLightbox() {
+	this.setState({
+	  currentImage: 0,
+	  lightboxIsOpen: false,
+	});
+	}
+	gotoPrevious() {
+	this.setState({
+	  currentImage: this.state.currentImage - 1,
+	});
+	}
+	gotoNext() {
+	this.setState({
+	  currentImage: this.state.currentImage + 1,
+	});
+	}
     renderImages(submission){
         return(
             <div className="RecentImage" >
@@ -145,7 +201,7 @@ async  instantiateContract() {
                         </div>
                     </div>
                     <div className="pure-u-1-2"> 
-                        <img className="pure-img"  src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 
+						<img className="pure-img"  src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 	
                     </div>
                 </div>
             </div>);
@@ -173,9 +229,20 @@ async  instantiateContract() {
           <div className="pure-u-1-1">
             <h3>Recent Submissions</h3>
             <Loader loaded={!this.state.loadingImages}>
-                {this.state.recentImages.map((submission) => this.renderImages(submission))}
+                {/* {this.state.recentImages.map((submission) => this.renderImages(submission))} */}
+				
+				<div className="test">
+					<Gallery photos={photos} onClick={this.openLightbox}/>
+					<Lightbox images={photos}
+						onClose={this.closeLightbox}
+         	 			onClickPrev={this.gotoPrevious}
+          				onClickNext={this.gotoNext}
+          				currentImage={this.state.currentImage}
+          				isOpen={this.state.lightboxIsOpen}
+        			/>
+				</div>
             </Loader>
-            </div>
+            </div>	
           </div>
         </main>
       </div>
