@@ -63,7 +63,7 @@ async  instantiateContract() {
         // Get the value from the contract to prove it worke/d.
         
         this.loadImages();  
-        console.log("Array after function call" + this.state.recentImages);
+        //console.log("Array after function call" + this.state.recentImages);
         return this.simpleStorageInstance.get(2)
       }).then((ipfsHash) => { 
          // Update state with the result. 
@@ -83,7 +83,7 @@ async  instantiateContract() {
             this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
                 return this.setState({ ipfsHash: result[0].hash })
             })
-            console.log('saving ifpsHash-'+ this.state.ipfsHash)
+            //console.log('saving ifpsHash-'+ this.state.ipfsHash)
         })
     }
     captureFile(event) {
@@ -96,41 +96,58 @@ async  instantiateContract() {
           //console.log('buffer' + this.state.buffer)
         }
     }
-
-    returnArray(event){
-        event.preventDefault();
-        console.log("Images Recent-"+this.state.ipfsHash); 
-    }
-  
-    async loadImages(){
+ 
+    loadImages(){
             this.setState({loadingImages: true, recentImages: []}); 
             let recentImages = []; 
             this.simpleStorageInstance.lastHashId ({from: this.state.account}).then((lastHash) =>{ 
                 const firstHash = Math.max(1, lastHash - 5);
-                for(let i = lastHash; i >= firstHash; i--){
+                for(let i = lastHash; i >= 1; i--){
                    this.simpleStorageInstance.get(i, {form: this.state.account}).then((recentHash) => {
                         let submission = {};
-                        submission.hashContent = recentHash;
-                        submission.hashId = i;
+                        submission.hashContent = recentHash[0];
+                        submission.sender = recentHash[1];
+                        submission.time = recentHash[2].toNumber();
+                        
+                        submission.hashId = i.toString();
                         recentImages.push(submission);
                         this.setState(recentImages: recentImages);
-                        //console.log("Hash id -" + submission.hashId + "Hash -" + submission.hashContent);
+                        console.log("Hash id -" + submission.hashId + "Hash -" + submission.hashContent);
                         console.log("array in function" + this.state.recentImages);
                     }) 
                 }
     
-                console.log("array in function before return" + this.state.recentImages);
                 return this.setState({loadingImages: false, recentImages: recentImages});  
             })
     }
     renderImages(submission){
-
-        console.log("array in function" + this.state.recentImages);
         return(
-            <div className="RecentImage" key={submission.hashId}>
-              <div className="pure-g">
-                <img src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 
-              </div>
+            <div className="RecentImage" >
+                <div className="pure-g" > 
+                    <div className="pure-u-1-2"> 
+                        <div className="pure-g">
+                            <div className="pure-u-1-1"> 
+                                <label className="submission-label">Sender:</label>
+                                <span className="submission-id">{submission.sender}</span>
+                            </div>
+                        </div>
+                        <div className="pure-g">
+                            <div className="pure-u-1-1"> 
+                                <label className="submission-label">Time:</label>
+                                <span className="submission-timestamp">{new Date(submission.time*1000).toISOString()}</span>
+                            </div>
+                        </div>
+                        <div className="pure-g">
+                            <div className="pure-u-1-1"> 
+                                <label className="submission-label">Hash:</label>
+                                <span className="submission-hashID">{submission.hashId}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="pure-u-1-2"> 
+                        <img className="pure-img"  src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 
+                    </div>
+                </div>
             </div>);
     } 
   render() {
@@ -150,20 +167,16 @@ async  instantiateContract() {
                 <input type='file' onChange={this.captureFile} />
                 <input type='submit' />
               </form>
-              <button onClick = {this.returnArray}>
-                ReturnArray
-              </button>
             </div>
           </div>
         <div className="RecentSubmissions">
           <div className="pure-u-1-1">
             <h3>Recent Submissions</h3>
             <Loader loaded={!this.state.loadingImages}>
-              {this.state.recentImages.map((submission) => this.renderImages(submission))}
+                {this.state.recentImages.map((submission) => this.renderImages(submission))}
             </Loader>
+            </div>
           </div>
-        </div>
-
         </main>
       </div>
     );

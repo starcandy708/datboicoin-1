@@ -3,8 +3,7 @@ pragma solidity 0.4.24;
 contract SimpleStorage {
     struct imageHash{
         string ipfsHash;  
-        address sender;
-        uint timeStamp;
+        string account; 
     } 
     //Hash Map
     mapping(uint => imageHash) public hashMap;
@@ -15,15 +14,14 @@ contract SimpleStorage {
         lastHashId = 0;
     }
 
-    function set(string _ipfsHash) public {
+    function set(string _ipfsHash,account) public {
         uint hashId = ++lastHashId;
         hashMap[hashId].ipfsHash = _ipfsHash;
-        hashMap[hashId].sender = msg.sender;
-        hashMap[hashId].timeStamp = block.timestamp;
+        hashMap[hashId].account = _account;
     }
 
-    function get(uint _hashId ) constant public returns (string ipfsHash,address sender,uint time ) {
-        return (hashMap[_hashId].ipfsHash, hashMap[_hashId].sender, hashMap[_hashId].timeStamp);
+    function get(uint _hashId ) constant public returns (string ipfsHash) {
+        return (hashMap[_hashId].ipfsHash);
 
     }
     function getLastHash() constant public returns (uint HashId){
