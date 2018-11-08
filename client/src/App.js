@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Gallery from 'react-photo-gallery'
 import Lightbox from 'react-images' 
+import { Security, ImplicitCallback } from '@okta/okta-react'
 import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
@@ -9,8 +10,28 @@ import './css/pure-min.css'
 import './App.css'
 var Loader = require('react-loader');
 
+const config = {
 
-const photos= [];
+	issuer: 'https://dev-313450.oktapreview.com/oauth2/default',
+	redirect_uri: window.location.origin + '/implicit/callback',
+	client_id: '0oahatmlpmIy2tm7v0h7'
+
+}
+
+const photos= [
+	/*
+	{ 
+		src: "https://ipfs.io/ipfs/QmXTGTkN2LxP3aeAw12Lf25Q9mZgL8xYKUNbqMEueCGyEk",
+		width: 1,
+		height: 1
+	},
+	{ 
+		src: "https://ipfs.io/ipfs/QmefX88N41ga9ZT6Ya23pERtSsDWNLLPawPKGFoqmievLa",
+		width: 1,
+		height: 1
+	}
+	*/
+];
 class App extends Component {
   constructor(props) {
     super(props)
@@ -123,9 +144,13 @@ async  instantiateContract() {
             this.setState({loadingImages: true, recentImages: []}); 
             let recentImages = []; 
 			//let photos = [];
+			console.log("loading image");
             this.simpleStorageInstance.lastHashId ({from: this.state.account}).then((lastHash) =>{ 
+				console.log("loading image");
                 for(let i = lastHash; i >= 1; i--){
                    this.simpleStorageInstance.get(i, {form: this.state.account}).then((recentHash) => {
+						
+						console.log("loading image");
                         let photo = {src:"",width:1,height:1};
 						let submission = {};
 						var ipfs = "https://ipfs.io/ipfs/"
