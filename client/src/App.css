@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  
+}
+body{
+  background-color:#FFE347;
 }
 .1-box{
     padding: 1em; 

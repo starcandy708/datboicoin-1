@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
 import Gallery from 'react-photo-gallery'
 import Lightbox from 'react-images' 
-import { Security, ImplicitCallback } from '@okta/okta-react'
 import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
+import firebase, { auth, provider } from './firebase.js';
 
 import './css/pure-min.css'
 import './App.css'
 var Loader = require('react-loader');
 
-const config = {
-
-	issuer: 'https://dev-313450.oktapreview.com/oauth2/default',
-	redirect_uri: window.location.origin + '/implicit/callback',
-	client_id: '0oahatmlpmIy2tm7v0h7'
-
-}
 
 const photos= [
 	/*
@@ -37,15 +30,19 @@ class App extends Component {
     super(props)
 
     this.state = {
+	username: '',
+	user: null,
       ipfsHash: '',
       web3: null,
       buffer: null,
       account: null,
       number: 0,
-	  currentImage: 0,
+	    currentImage: 0,
       loadingImages: false,
       recentImages: []
     }
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
     this.gotoNext = this.gotoNext.bind(this);
@@ -63,8 +60,7 @@ class App extends Component {
       this.setState({
         web3: results.web3
       })
-
-      // Instantiate contract once web3 provided.
+       // Instantiate contract once web3 provided.
       this.instantiateContract()
     })
     .catch(() => {
@@ -72,7 +68,14 @@ class App extends Component {
     })
   }
 
-async  instantiateContract() {
+componentDidMount() {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      this.setState({ user });
+    } 
+  });
+}
+instantiateContract() {
     /*
      * SMART CONTRACT EXAMPLE
      *
@@ -102,6 +105,27 @@ async  instantiateContract() {
       }) 
     })
   }
+
+handleChange(e) {
+  /* ... */
+}
+logout() {
+    auth.signOut()
+    .then(() => {
+      this.setState({
+        user: null
+      });
+    });
+}
+login() {
+  auth.signInWithPopup(provider) 
+    .then((result) => {
+      const user = result.user;
+      this.setState({
+        user
+      });
+    });
+}
 
     onSubmit(event) {
         event.preventDefault()
@@ -201,49 +225,41 @@ async  instantiateContract() {
 	  currentImage: this.state.currentImage + 1,
 	});
 	}
-    renderImages(submission){
-        return(
-            <div className="RecentImage" >
-                <div className="pure-g" > 
-                    <div className="pure-u-1-2"> 
-                        <div className="pure-g">
-                            <div className="pure-u-1-1"> 
-                                <label className="submission-label">Sender:</label>
-                                <span className="submission-id">{submission.sender}</span>
-                            </div>
-                        </div>
-                        <div className="pure-g">
-                            <div className="pure-u-1-1"> 
-                                <label className="submission-label">Time:</label>
-                                <span className="submission-timestamp">{new Date(submission.time*1000).toISOString()}</span>
-                            </div>
-                        </div>
-                        <div className="pure-g">
-                            <div className="pure-u-1-1"> 
-                                <label className="submission-label">Hash:</label>
-                                <span className="submission-hashID">{submission.hashId}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="pure-u-1-2"> 
-						<img className="pure-img"  src={`https://ipfs.io/ipfs/${submission.hashContent}`} alt=""/> 	
-                    </div>
-                </div>
-            </div>);
-    } 
+    
   render() {
     return (
-      <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-          <a href="#" className="pure-menu-heading pure-menu-link">IPFS File Upload DApp</a>
-        </nav>
 
+<body>
+<div className="header">
+<div className="pure-menu pure-menu-horizontal">
+    <a href="http://165.227.203.18:3000/Welcome.html" className="pure-menu-heading pure-menu-link"><img src="datboicoin.gif" width="75" height="75" align="left"/></a>
+    <ul className="pure-menu-list">
+        <li className="pure-menu-item"><a href="#" className="pure-menu-link">DATBOICOIN</a></li>
+        <li className="pure-menu-item"><a href="#" className="pure-menu-link">Create Account</a></li>
+        <li className="pure-menu-item"><a href="http://165.227.203.18:3000/" className="pure-menu-link">Upload Image</a></li>
+        <li className="pure-menu-item"><a href="#" className="pure-menu-link">View Image</a></li>
+		<li className="pure-mneu-iten">{this.state.user ? <button onClick={this.logout}>Log Out</button> : <button onClick={this.login}>Log In</button>}</li>
+    </ul>
+</div>
+</div>
+
+      <div className="App">
+      
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Your Image</h1>
-              <p>This Meme is being stored on DatBoiCoin</p>
-              <h2>Upload Image</h2>
+				{this.state.user ?
+				<div>
+				  <h3>Welcome</h3>
+				  <div className='user-profile'>
+					<img src={this.state.user.photoURL} />
+				  </div>
+				</div>
+				:
+				<div className='wrapper'>
+				</div>
+			  }      			
+              <h1>Upload Image</h1>
               <form onSubmit={this.onSubmit} >
                 <input type='file' onChange={this.captureFile} />
                 <input type='submit' />
@@ -252,7 +268,7 @@ async  instantiateContract() {
           </div>
         <div className="RecentSubmissions">
           <div className="pure-u-1-1">
-            <h3>Recent Submissions</h3>
+            <h3>Submissions</h3>
             <Loader loaded={!this.state.loadingImages}>
                 {/* {this.state.recentImages.map((submission) => this.renderImages(submission))} */}
 				
@@ -271,6 +287,7 @@ async  instantiateContract() {
           </div>
         </main>
       </div>
+</body>
     );
   }
 }
