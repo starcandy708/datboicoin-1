@@ -4,6 +4,12 @@
 }
 body{
   background-color:#FFE347;
+ padding-top: 65px; 
+}
+.navbar,
+.navbar-default{
+  background-color: #43e846;
+  border: none;
 }
 .1-box{
     padding: 1em; 

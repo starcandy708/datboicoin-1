@@ -5,10 +5,19 @@ import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 import firebase, { auth, provider } from './firebase.js';
-
+import Button from 'react-bootstrap/lib/Button';
+import Navbar from 'react-bootstrap/lib/Navbar';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import Form from 'react-bootstrap/lib/Form';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 import './css/pure-min.css'
+import './boot/css/bootstrap.css'
 import './App.css'
 var Loader = require('react-loader');
+const REACT_VERSION = React.version;
 
 
 const photos= [
@@ -228,24 +237,28 @@ login() {
     
   render() {
     return (
-
 <body>
-<div className="header">
-<div className="pure-menu pure-menu-horizontal">
-    <a href="http://165.227.203.18:3000/Welcome.html" className="pure-menu-heading pure-menu-link"><img src="datboicoin.gif" width="75" height="75" align="left"/></a>
-    <ul className="pure-menu-list">
-        <li className="pure-menu-item"><a href="#" className="pure-menu-link">DATBOICOIN</a></li>
-        <li className="pure-menu-item"><a href="#" className="pure-menu-link">Create Account</a></li>
-        <li className="pure-menu-item"><a href="http://165.227.203.18:3000/" className="pure-menu-link">Upload Image</a></li>
-        <li className="pure-menu-item"><a href="#" className="pure-menu-link">View Image</a></li>
-		<li className="pure-mneu-iten">{this.state.user ? <button onClick={this.logout}>Log Out</button> : <button onClick={this.login}>Log In</button>}</li>
-    </ul>
-</div>
-</div>
+	<title>DApp</title>
 
-      <div className="App">
-      
-        <main className="container">
+	<Navbar fixedTop fluid>
+	  <Nav >
+		<NavItem eventKey={1} href="#">
+		  Home
+		</NavItem>
+		<NavItem eventKey={2} href="#">
+		  View Image
+		</NavItem>
+		<NavItem eventKey={3} href="#">
+		  Upload Image
+		</NavItem>
+		<Navbar.Form pullRight>
+			{this.state.user ? <Button onClick={this.logout}>Log Out</Button> : <Button onClick={this.login}>Log In</Button>}
+		</Navbar.Form>
+	  </Nav>
+	</Navbar> 
+
+    <div className="App">
+			<main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
 				{this.state.user ?
