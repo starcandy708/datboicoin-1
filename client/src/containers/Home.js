@@ -3,6 +3,7 @@ import React, { Component } from "react";
 export default class Home extends Component {
   render() {
     return (
+	  <div className="App container">
       <div className="Home">
         <div className="lander">
           <h1>Welcome to DatBoi Coin:</h1>
@@ -12,6 +13,7 @@ export default class Home extends Component {
             <p>Our solution will utilize blockchain technology to both provide an open ledger to consumers to prove their content is not being adulterated when it is hosted; and to create a financial reward for our user community to promote our system’s growth and maintenance. A decentralized image hosting system with an open ledger can create a free and democratic image hosting community.
 </p>
         </div>
+      </div>
       </div>
     );
   }
