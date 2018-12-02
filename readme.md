@@ -13,7 +13,7 @@ Oh Shit Waddup You Want To Install The Dankest CyrptoCurreny Ever Well here is h
 
 # Installation
 
-1. Run `Git Clone https://github.com/DatBoiCoinClub/datboicoin.git`
+1. Run `git clone https://github.com/DatBoiCoinClub/datboicoin.git`
 2. `cd datboicoin/client`
 3. Run `npm install`
 4. Run `npm audit fix` to fix any vulnerabilities
