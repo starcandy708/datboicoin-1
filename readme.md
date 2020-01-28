@@ -1,6 +1,5 @@
 # DatBoiCoin Install Guide
 
-Oh Shit Waddup You Want To Install The Dankest CyrptoCurreny Ever Well here is how:
 
 ## Requiruments
 
@@ -23,6 +22,3 @@ Oh Shit Waddup You Want To Install The Dankest CyrptoCurreny Ever Well here is h
 8. Open your broswer and go to localhost:3000
 9. Open metamask and add custom rpc localhost:7545
 10. Import a new account using the private key provided in ganache 
-11. Upload Dank Memes
-
-Please direct all problems with installing to dat boi
